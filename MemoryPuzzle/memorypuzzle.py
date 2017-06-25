@@ -16,7 +16,7 @@ class Colors(Enum):
 FPS = 30
 WINDOWWIDTH = 640
 WINDOWHEIGHT = 480
-MARGIN = 20
+MARGIN = 10
 BGCOLOR = Colors.NAVYBLUE
 
 class Box(object):
@@ -72,7 +72,7 @@ class Box(object):
 			return False
 
 class Grid():
-	def __init__(self,display,posx,posy,width,height,boxlength=128,imgpath='.',margin=10,bgcolor=Colors.WHITE,successfilename='success.wav',errorfilename='error.wav',font='freesansbold.ttf'):
+	def __init__(self,display,posx,posy,width,height,boxlength=64,imgpath='.',margin=10,bgcolor=Colors.WHITE,successfilename='success.wav',errorfilename='error.wav',font='freesansbold.ttf'):
 		self.__x = posx
 		self.__y = posy
 		self.score = 0
@@ -87,7 +87,6 @@ class Grid():
 		self.__error = pygame.mixer.Sound(errorfilename)
 		for boxes in self.__board:
 			self.__lenboard += len(boxes)
-		print(self.__lenboard)
 		assert self.__lenboard%2 == 0
 		assert (len([name for name in os.listdir(imgpath) if os.path.isfile(os.path.join(imgpath, name))])*2) <= self.__lenboard
 		idnum = 0
@@ -162,11 +161,11 @@ class Grid():
 		pygame.display.update()
 		textSurfaceObj = pygame.font.Font('freesansbold.ttf', 32).render('You Won!',False, Colors.BLACK)
 		textRectObj = textSurfaceObj.get_rect()
-		textRectObj.center = (WINDOWWIDTH/2,WINDOWHEIGHT/2)
+		textRectObj.center = (WINDOWWIDTH/2,WINDOWHEIGHT/2+140)
 		self.__display.blit(textSurfaceObj,textRectObj)
 		textSurfaceObj = pygame.font.Font('freesansbold.ttf', 32).render('Score: {0}'.format(self.score),False, Colors.BLACK)
 		textRectObj = textSurfaceObj.get_rect()
-		textRectObj.center = (WINDOWWIDTH/2,WINDOWHEIGHT/2+100)
+		textRectObj.center = (WINDOWWIDTH/2,WINDOWHEIGHT/2+180)
 		self.__display.blit(textSurfaceObj,textRectObj)
 		pygame.display.update()
 
@@ -177,7 +176,7 @@ def main():
 	FPSCLOCK = pygame.time.Clock()
 
 	#Generate board
-	board = Grid(	DISPLAYSURF,40,60,WINDOWWIDTH-MARGIN,WINDOWHEIGHT-MARGIN,\
+	board = Grid(	DISPLAYSURF,150,60,300,230,\
 					imgpath='icons',margin=MARGIN,bgcolor=Colors.NAVYBLUE,\
 					successfilename='sounds/success.wav',errorfilename='sounds/error.wav')
 
