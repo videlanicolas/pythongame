@@ -40,7 +40,9 @@ Have fun!
 
 ### Memory Puzzle
 <img src="screenshots/MemoryPuzzle.png"/>
+
 ### Slide Puzzle
 <img src="screenshots/SlidePuzzle.png"/>
+
 ### Simulate (a.k.a. Simon Says)
 <img src="screenshots/Simulate.png"/>
