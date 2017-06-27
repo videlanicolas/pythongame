@@ -4,7 +4,7 @@ Following tutorials from <a href=https://inventwithpython.com/makinggames.pdf>th
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/basics">Basics</a> (blank screen, draw primitives, animate primitives, display fonts, sounds, music)
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/MemoryPuzzle">Memory Puzzle</a>
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/SlidePuzzle">Slide Puzzle</a>
-- [ ] Simulate
+- [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/Simulate">Simulate</a>
 - [ ] Wormy
 - [ ] Tetromino
 - [ ] Squirrel eat squirrel
@@ -36,7 +36,11 @@ Each game has it's own Python Virutal environment, so no need to "pip install" a
 
 Have fun!
 
-### Some screenshots
+## Game screenshots
 
+### Memory Puzzle
 <img src="screenshots/MemoryPuzzle.png"/>
+### Slide Puzzle
 <img src="screenshots/SlidePuzzle.png"/>
+### Simulate (a.k.a. Simon Says)
+<img src="screenshots/Simulate.png"/>
