@@ -1,4 +1,4 @@
-#!../pygamevenv/bin/python
+#!venv/bin/python
 import pygame, sys, time, random, glob, os
 from pygame.locals import *
 from enum import Enum

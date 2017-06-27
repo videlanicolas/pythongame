@@ -27,5 +27,9 @@ Or download the game you want to play:
 
 ```
 sudo apt-get install -y subversion
-git clone https://github.com/videlanicolas/pythongame/trunk/<Game's Folder>
+svn export https://github.com/videlanicolas/pythongame/trunk/<Game's Folder>
 ```
+
+Each game has it's own Python Virutal environment, so no need to "pip install" anything.
+
+Have fun!
