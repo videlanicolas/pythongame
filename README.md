@@ -16,7 +16,7 @@ Following tutorials from <a href=https://inventwithpython.com/makinggames.pdf>th
 
 ### How to play?
 
-Clone this repo:
+Clone this repo (get all games):
 
 ```
 sudo apt-get install -y git
@@ -28,8 +28,15 @@ Or download the game you want to play:
 ```
 sudo apt-get install -y subversion
 svn export https://github.com/videlanicolas/pythongame/trunk/<Game's Folder>
+cd <Game's Folder>
+./<game's name>.py
 ```
 
 Each game has it's own Python Virutal environment, so no need to "pip install" anything.
 
 Have fun!
+
+### Some screenshots
+
+<img src="screenshots/MemoryPuzzle.png"/>
+<img src="screenshots/SlidePuzzle.png"/>
