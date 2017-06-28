@@ -5,7 +5,7 @@ Following tutorials from <a href=https://inventwithpython.com/makinggames.pdf>th
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/MemoryPuzzle">Memory Puzzle</a>
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/SlidePuzzle">Slide Puzzle</a>
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/Simulate">Simulate</a>
-- [ ] Wormy
+- [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/Wormy">Wormy</a>
 - [ ] Tetromino
 - [ ] Squirrel eat squirrel
 - [ ] Star pusher
@@ -46,3 +46,6 @@ Have fun!
 
 ### Simulate (a.k.a. Simon Says)
 <img src="screenshots/Simulate.png"/>
+
+### Wormy (a.k.a. Snake)
+<img src="screenshots/Wormy.png"/>
