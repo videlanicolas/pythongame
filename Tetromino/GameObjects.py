@@ -115,10 +115,13 @@ class Score(Text):
 	def __init__(self,surface,posx,posy,score=0,fontsize=32,fontcolor=Colors.BLACK,bgcolor=Colors.WHITE):
 		Text.__init__(self,surface,posx,posy,'Score: {0}'.format(score),fontcolor=fontcolor,fontsize=fontsize,bgcolor=bgcolor)
 		self.score = score
-	def modifyScore(self,newscore):
-		self.score += newscore
+	def modifyscore(self,newscore):
+		self.score = newscore
 		self.legend = 'Score: {0}'.format(self.score)
-	def resetScore(self):
+	def addscore(self,deltascore):
+		self.score += deltascore
+		self.legend = 'Score: {0}'.format(self.score)
+	def resetscore(self):
 		self.score = 0
 		self.legend = 'Score: {0}'.format(self.score)
 

@@ -19,13 +19,12 @@ class Tetrominos(Enum):
 	ACTIONSQUARE = ([[True]*4]*4,Colors.RED)
 
 def random_tetromino():
-	return Tetrominos.LINE
-	#return getattr(Tetrominos, random.choice(['LINE','SQUARE','L_1','L_2','S_1','S_2','FORK']))
+	return getattr(Tetrominos, random.choice(['LINE','SQUARE','L_1','L_2','S_1','S_2','FORK']))
 
 def displaygameover(surface,score):
 	ax = 200
 	ay = 80
-	display = GameRect(surface,(WINDOWWIDTH/2) - ax/2,(WINDOWHEIGHT/2) - ay/2,ax,ay,forecolor=Colors.WHITE,legend='Score: {0}'.format(score))
+	display = Text(surface,(WINDOWWIDTH/2) - ax/2,(WINDOWHEIGHT/2) - ay/2,ax,ay,legend='Score: {0}'.format(score))
 	display.draw()
 
 class Grid(GameRect):
@@ -53,9 +52,13 @@ class Grid(GameRect):
 					if not obj.empty():
 						break
 				else:
-					for obj, prev_obj in zip(line,prev_line):
-						obj.changecolor(prev_obj.getcolor())
-						obj.falling = False
+					#Drop upper blocks
+					self.__drop_upperblocks(line)
+	def __drop_upperblocks(self,line):
+		for _line, _prev_line in zip(self.__matrix[self.__matrix.index(line):0:-1],self.__matrix[self.__matrix.index(line)::-1][1:]):
+			for obj, prev_obj in zip(_line,_prev_line):
+				obj.changecolor(prev_obj.getcolor())
+				obj.falling = False
 	def __freeze(self):
 		for obj in itertools.chain.from_iterable(zip(*self.__matrix)):
 			obj.falling = False
@@ -99,6 +102,7 @@ class Grid(GameRect):
 			self.drawblocks()
 			time.sleep(0.3)
 	def check_lines(self):
+		score = 0
 		for line in self.__matrix:
 			for obj in line:
 				if obj.empty():
@@ -106,6 +110,8 @@ class Grid(GameRect):
 			else:
 				self.__flashline(line)
 				self.dropblocks()
+				score += (score*10 + 1)
+		return score
 
 class Tetromino(object):
 	def __init__(self,i,j,figure):
@@ -156,14 +162,16 @@ class Tetromino(object):
 
 def main():
 	pygame.init()
+	pygame.key.set_repeat(100,1)
 	DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH,WINDOWHEIGHT))
 	BLOCKSIZE = 30
 	FPS = 30
 	pygame.display.set_caption('Tetromino')
 	FPSCLOCK = pygame.time.Clock()
-	BLOCKCLOCK = 1
-	#pygame.mixer.music.load('music/level1.mp3')
-	#pygame.mixer.music.play(-1, 0.0)
+	BLOCKCLOCK = 10
+	DIFFICULTY = 30
+	pygame.mixer.music.load('music/level1.mp3')
+	pygame.mixer.music.play(-1, 0.0)
 
 	#Generate containers
 	main_grid = Grid(DISPLAYSURF,10,10,square_x=17,square_y=33,square_size=BLOCKSIZE,forecolor=Colors.PURPLE)
@@ -172,7 +180,8 @@ def main():
 	main_grid.draw()
 	next_grid.draw()
 	score_grid.draw()
-	score = 0
+	addscore = 0
+	difficulty = 0
 
 	main_grid.tetromino = Tetromino(0,7,random_tetromino())
 	main_grid.draw_tetromino()
@@ -188,6 +197,10 @@ def main():
 		if fps == FPS/10:
 			blockclock += 1
 			fps = 0
+		if difficulty == DIFFICULTY:
+			difficulty = 0
+			if BLOCKCLOCK > 1:
+				BLOCKCLOCK -= 1
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				pygame.mixer.music.stop()
@@ -200,22 +213,34 @@ def main():
 						main_grid.erase_tetromino()
 						main_grid.move_tetromino(event.key)
 						main_grid.draw_tetromino()
-				elif event.key in [K_UP,K_DOWN]:
+				elif event.key == K_UP:
 					main_grid.erase_tetromino()
 					main_grid.rotate_tetromino(event.key)
 					main_grid.draw_tetromino()
+				elif event.key == K_DOWN:
+					main_grid.dropblocks()
+					blockclock = 0
 		if blockclock == BLOCKCLOCK:
 			main_grid.dropblocks()
 			blockclock = 0
 		if not main_grid.tetromino:
-			main_grid.check_lines()
+			addscore = main_grid.check_lines()
 			main_grid.tetromino = Tetromino(0,7,next_tetromino)
-			main_grid.draw_tetromino()
+			try:
+				main_grid.draw_tetromino()
+			except:
+				displaygameover(DISPLAYSURF,0)
+				raw_input()
 			next_tetromino = random_tetromino()
 			next_grid.tetromino = Tetromino(1,1,next_tetromino)
 			next_grid.erase_tetromino()
 			next_grid.draw_tetromino()
 			next_grid.drawblocks()
+			difficulty += 1
+		if addscore > 0:
+			score_grid.addscore(addscore)
+			score_grid.redraw()
+			addscore = 0
 		main_grid.drawblocks()
 		FPSCLOCK.tick(FPS)
 		fps += 1
