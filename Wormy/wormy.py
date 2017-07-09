@@ -120,7 +120,7 @@ def main():
 			displaygameover(DISPLAYSURF,score)
 			while True:
 				for event in pygame.event.get():
-					if event.type in [QUIT, KEYDOWN]:
+					if event.type == QUIT:
 						pygame.mixer.music.stop()
 						pygame.quit()
 						sys.exit()

@@ -57,7 +57,7 @@ class Score(Text):
 		self.legend = 'Score: {0}'.format(self.score)
 
 class GameRect(object):
-	def __init__(self,surface,display,posx,posy,width,height,forecolor=Colors.GRAY,bgcolor=Colors.GRAY,legend=None,fontcolor=Colors.BLACK,font='freesansbold.ttf',fontsize=32,rectwidth=0):
+	def __init__(self,surface,display,posx,posy,width,height,bgcolor=Colors.GRAY,legend=None,fontcolor=Colors.BLACK,font='freesansbold.ttf',fontsize=32,rectwidth=0):
 		self._x = posx
 		self._y = posy
 		self._width = width
