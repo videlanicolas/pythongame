@@ -11,8 +11,8 @@ WINDOWY = 10
 class Tetrominos(Enum):
 	LINE = ([[False,False,True,False]]*4,Colors.CYAN)
 	SQUARE = ([[False]*4,[False,True,True,False],[False,True,True,False],[False]*4],Colors.YELLOW)
-	L_1 = ([[False,False,True,False]]*3 + [[False,True,True,False]],Colors.BLUE)
-	L_2 = ([[False,True,False,False]]*3 + [[False,True,True,False]],Colors.ORANGE)
+	L_1 = ([[False,False,False,False]] + [[False,False,True,False]]*2 + [[False,True,True,False]],Colors.BLUE)
+	L_2 = ([[False,False,False,False]] + [[False,True,False,False]]*2 + [[False,True,True,False]],Colors.ORANGE)
 	S_1 = ([[False]*4] + [[False,False,True,True],[False,True,True,False]] + [[False]*4],Colors.GREEN)
 	S_2 = ([[False]*4] + [[True,True,False,False],[False,True,True,False]] + [[False]*4],Colors.RED)
 	FORK = ([[False]*4] + [[False,False,True,False],[False,True,True,True]] + [[False]*4],Colors.PURPLE)
@@ -21,11 +21,20 @@ class Tetrominos(Enum):
 def random_tetromino():
 	return getattr(Tetrominos, random.choice(['LINE','SQUARE','L_1','L_2','S_1','S_2','FORK']))
 
-def displaygameover(surface,score):
-	ax = 200
-	ay = 80
-	display = Text(surface,(WINDOWWIDTH/2) - ax/2,(WINDOWHEIGHT/2) - ay/2,ax,ay,legend='Score: {0}'.format(score))
+def displaygameover(surface):
+	display = Text(surface,170,500,fontcolor=Colors.WHITE,legend='GAME OVER')
 	display.draw()
+	return display
+
+def displaypause(surface):
+	display = Text(surface,550,100,fontcolor=Colors.WHITE,legend='PAUSE')
+	display.draw()
+	return display
+
+def displaymute(surface):
+	display = Text(surface,550,150,fontcolor=Colors.WHITE,legend='MUTE')
+	display.draw()
+	return display
 
 class Grid(GameRect):
 	def __init__(self,surface,x,y,square_x,square_y,square_size=10,forecolor=Colors.WHITE,bgcolor=Colors.BLACK,rectwidth=5):
@@ -160,6 +169,15 @@ class Tetromino(object):
 		elif direction == K_DOWN:
 			self.__figure = zip(*self.__figure)[::-1]
 
+def wait_for_key(key,keytype=KEYDOWN,fps=30):
+	p = pygame.time.Clock()
+	while True:
+		for event in pygame.event.get():
+			if event.type == keytype:
+				if event.key == key:
+					return None
+		p.tick(fps)
+
 def main():
 	pygame.init()
 	pygame.key.set_repeat(100,1)
@@ -182,6 +200,7 @@ def main():
 	score_grid.draw()
 	addscore = 0
 	difficulty = 0
+	mute = None
 
 	main_grid.tetromino = Tetromino(0,7,random_tetromino())
 	main_grid.draw_tetromino()
@@ -220,6 +239,24 @@ def main():
 				elif event.key == K_DOWN:
 					main_grid.dropblocks()
 					blockclock = 0
+				elif event.key == K_p:
+					pygame.mixer.music.pause()
+					#Show pause box
+					pause = displaypause(DISPLAYSURF)
+					wait_for_key(K_p,keytype=KEYUP)
+					wait_for_key(K_p)
+					pygame.mixer.music.unpause()
+					pause.erase()
+					del pause
+				elif event.key == K_m:
+					if mute:
+						pygame.mixer.music.unpause()
+						mute.erase()
+						mute = None
+					else:
+						pygame.mixer.music.pause()
+						mute = displaymute(DISPLAYSURF)
+
 		if blockclock == BLOCKCLOCK:
 			main_grid.dropblocks()
 			blockclock = 0
@@ -229,8 +266,11 @@ def main():
 			try:
 				main_grid.draw_tetromino()
 			except:
-				displaygameover(DISPLAYSURF,0)
-				raw_input()
+				displaygameover(DISPLAYSURF)
+				wait_for_key(K_RETURN)
+				pygame.mixer.music.stop()
+				pygame.quit()
+				sys.exit()
 			next_tetromino = random_tetromino()
 			next_grid.tetromino = Tetromino(1,1,next_tetromino)
 			next_grid.erase_tetromino()

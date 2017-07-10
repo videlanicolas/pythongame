@@ -86,7 +86,7 @@ class Block(GameRect):
 			return False
 
 class Text(object):
-	def __init__(self,surface,posx,posy,legend=None,fontsize=32,fontcolor=Colors.BLACK,bgcolor=Colors.GRAY,font='freesansbold.ttf'):
+	def __init__(self,surface,posx,posy,legend=None,fontsize=32,fontcolor=Colors.BLACK,bgcolor=Colors.BLACK,font='freesansbold.ttf'):
 		self._surface = surface
 		self._x = posx
 		self._y = posy
