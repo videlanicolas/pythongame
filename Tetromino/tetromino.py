@@ -190,6 +190,7 @@ def main():
 	DIFFICULTY = 30
 	pygame.mixer.music.load('music/level1.mp3')
 	pygame.mixer.music.play(-1, 0.0)
+	SOUNDS = {'rotate' : pygame.mixer.Sound('sounds/rotate.wav')}
 
 	#Generate containers
 	main_grid = Grid(DISPLAYSURF,10,10,square_x=17,square_y=33,square_size=BLOCKSIZE,forecolor=Colors.PURPLE)
@@ -233,6 +234,7 @@ def main():
 						main_grid.move_tetromino(event.key)
 						main_grid.draw_tetromino()
 				elif event.key == K_UP:
+					SOUNDS['rotate'].play()
 					main_grid.erase_tetromino()
 					main_grid.rotate_tetromino(event.key)
 					main_grid.draw_tetromino()

@@ -6,7 +6,7 @@ Following tutorials from <a href=https://inventwithpython.com/makinggames.pdf>th
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/SlidePuzzle">Slide Puzzle</a>
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/Simulate">Simulate</a>
 - [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/Wormy">Wormy</a>
-- [ ] Tetromino
+- [x] <a href="https://github.com/videlanicolas/pythongame/tree/master/Tetromino">Tetromino</a>
 - [ ] Squirrel eat squirrel
 - [ ] Star pusher
 - [ ] Flippy
@@ -32,6 +32,15 @@ cd <Game's Folder>
 ./<game's name>.py
 ```
 
+Example:
+
+```
+sudo apt-get install -y subversion
+svn export https://github.com/videlanicolas/pythongame/trunk/Tetromino
+cd Tetromino
+./tetromino.py
+```
+
 Each game has it's own Python Virutal environment, so no need to "pip install" anything.
 
 Have fun!
@@ -49,3 +58,6 @@ Have fun!
 
 ### Wormy (a.k.a. Snake)
 <img src="screenshots/Wormy.png"/>
+
+### Tetromino (a.k.a. Tetris)
+<img src="screenshots/Tetromino.png"/>
