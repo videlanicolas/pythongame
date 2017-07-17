@@ -29,6 +29,8 @@ Or download the game you want to play:
 sudo apt-get install -y subversion
 svn export https://github.com/videlanicolas/pythongame/trunk/<Game's Folder>
 cd <Game's Folder>
+source venv/bin/activate
+pip install -r requirements.txt
 ./<game's name>.py
 ```
 
@@ -38,10 +40,10 @@ Example:
 sudo apt-get install -y subversion
 svn export https://github.com/videlanicolas/pythongame/trunk/Tetromino
 cd Tetromino
+source venv/bin/activate
+pip install -r requirements.txt
 ./tetromino.py
 ```
-
-Each game has it's own Python Virutal environment, so no need to "pip install" anything.
 
 Have fun!
 
